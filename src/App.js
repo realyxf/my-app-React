@@ -1,17 +1,43 @@
-import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Counter from './Component/Counter'
-import CounterGroup from './Component/CounterGroup';
+import React, { Component } from "react";
+import * as Action from "./Action";
+import { connect } from "react-redux";
+import store from "./Store";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <CounterGroup/>
-      </header>
-    </div>
-  );
+// function App() {
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <CounterGroup/>
+//       </header>
+//     </div>
+//   );
+// }
+
+// export default App;
+class App extends Component {
+
+  render() {
+    
+    const { increment, decrement } = this.props;
+
+    return (
+      <div className="App">
+        <header className="App-header">
+        <button onClick={() => decrement()}>-</button>
+        <label>{this.props.count}</label>
+        <button onClick={() => increment()}>+</button>
+        </header>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  count: state
+});
+
+export default connect(mapStateToProps,Action)(App);
+
+//onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
